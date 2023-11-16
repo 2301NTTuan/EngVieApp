@@ -1,0 +1,8 @@
+architechture	kien truc
+attack	 tan cong
+bear	con gau
+dinosaur	khung long
+lip	moi
+mouse	con chuot
+moustech	ria
+zeus	than sam

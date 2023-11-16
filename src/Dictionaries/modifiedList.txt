@@ -1,0 +1,2 @@
+attach	gan vao
+chicken	con ga nhe

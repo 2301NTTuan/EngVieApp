@@ -1,0 +1,5 @@
+abstract	truu tuong
+attach	gan vao
+chicken	con ga nhe
+hello	chao cai gi
+superman	sieunhan
