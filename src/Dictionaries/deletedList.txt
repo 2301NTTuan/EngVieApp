@@ -1,5 +1,6 @@
-abstract	truu tuong
-attach	gan vao
-chicken	con ga nhe
-hello	chao cai gi
-superman	sieunhan
+*aardvark 	(động vật) lợn đất
+*abandon 	bộm (nhiếp ảnh) (nhiếp ảnh) (từ Mỹ,nghĩa Mỹ) từ bỏ; bỏ rơi, ruồng bỏ sự phóng túng, sự tự do, sự buông thả
+*cup 	cái cốc
+*hand 	ban tay
+*hello 	xin chao b
+*thanks 	lời cảm ơn, sự cảm ơn nhờ có

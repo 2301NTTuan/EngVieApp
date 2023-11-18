@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class Main {
     public static int option = -1;
     public static void main(String[] args) throws Exception {
-      do {
+       do {
           System.out.println("Select version you want to use: "
                   + "\n0. Exit."
                   + "\n1. Command Line Version."
@@ -19,7 +19,7 @@ public class Main {
                   break;
               case 1:
                   DictionaryCommandLine dictionaryCommandLine = new DictionaryCommandLine();
-                  DictionaryManagement.insertFromFileToList(Dictionary.wordArray, Dictionary.mainDictionary);
+                  DictionaryManagement.insertAllFile();
                   dictionaryCommandLine.dictionaryAdvanced();
                   break;
               case 2:
@@ -35,5 +35,8 @@ public class Main {
                   break;
           }
       }while (option != 0);
+
     }
+     // DictionaryManagement.insertAllFile();
+    //  DictionaryCommandLine.showMainDictionary();
 }

@@ -12,6 +12,10 @@ public class DictionaryManagement extends Dictionary{
         return noti;
     }
 
+    public static void setNoti(String noti) {
+        DictionaryManagement.noti = noti;
+    }
+
     public static void insertFromCommandLine() {
         int numberOfWords;
         do {
@@ -30,19 +34,24 @@ public class DictionaryManagement extends Dictionary{
             String word_target  = scanner.nextLine().toLowerCase();
             System.out.println("\t + Enter the Vietnamese meaning: ");
             System.out.print("\t");
-            String word_explain = scanner.nextLine();
+            String word_explain = scanner.nextLine().toLowerCase();
             addWord(word_target, word_explain);
         }
         System.out.println("Action Completed");
     }
 
     public static void addWord(String word_target, String word_explain) {
-        if (!isWordExists(wordArray, word_target)) {
-            Word w = new Word(word_target, word_explain);
-            insertWord(w, wordArray);
-            if (!isWordExists(addedArray, word_target)) {
-                insertWord(w, addedArray);
-            }
+        Word w = new Word(word_target, word_explain);
+        if (!isWordExists(addedArray, word_target)) {
+            insertWord(w, addedArray);
+            updateFile(addedArray, addedList);
+            insertWord(w, userArray);
+            updateFile(userArray, userList);
+            System.out.println("Added!");
+            setNoti("Added!");
+        } else {
+            System.out.println("That word has been added previously!");
+            setNoti("That word has been added previously!");
         }
     }
 
@@ -50,23 +59,37 @@ public class DictionaryManagement extends Dictionary{
         try {
             if (word_target == null || word_target.isEmpty()) {
                 System.out.println("Enter word:");
-                word_target = scanner.nextLine().toLowerCase();
+                word_target = scanner.nextLine();
             }
-            Word word;
-            if ((word = binarySearchWord(word_target, wordArray)) != null) {
-                if (!isWordExists(deletedArray, word_target)) {
+            word_target = word_target.toLowerCase();
+            if ((!isWordExists(deletedArray, word_target))) {
+                if (isWordExists(userArray, word_target)) {
+                    Word word;
+                    word = binarySearchWord(word_target, userArray);
+                    userArray.remove(word);
                     insertWord(word, deletedArray);
                     updateFile(deletedArray, deletedList);
+                    System.out.println("Deleted");
+                    setNoti("Deleted");
+                } else {
+                    Word word = binarySearchWord(word_target, wordArray);
+                    if (word != null) {
+                        insertWord(word, deletedArray);
+                        updateFile(deletedArray, deletedList);
+                        System.out.println("Deleted");
+                        setNoti("Deleted");
+                    } else {
+                        System.out.println("Not found word!");
+                        setNoti("Not found word!");
+                    }
                 }
-                wordArray.remove(word);
-                updateFile(wordArray, mainDictionary);
-                noti = "This word has been removed.\n";
             } else {
-                noti = "Not found word!\n";
+                System.out.println("This word has been removed previously!");
+                setNoti("This word has been removed previously!");
             }
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
-            noti = "Error!";
+            setNoti("Error!");
         }
     }
 
@@ -74,29 +97,47 @@ public class DictionaryManagement extends Dictionary{
         try {
             if (word_target == null || word_target.isEmpty()) {
                 System.out.println("Enter word:");
-                word_target = scanner.nextLine();
+                word_target = scanner.nextLine().replaceAll("\\s+", " ").trim().toLowerCase();
+            }
+            if (explain == null || explain.isEmpty()) {
+                System.out.println("Enter your definition:");
+                explain = scanner.nextLine().replaceAll("\\s+", " ").trim();
             }
             Word word;
-            word = binarySearchWord(word_target.toLowerCase(), wordArray);
-            if (word != null) {
-                if (explain == null || explain.isEmpty()) {
-                    System.out.println("Enter your definition:");
-                    explain = scanner.nextLine();
-                }
+            Word temp;
+            if ((word = binarySearchWord(word_target, userArray)) != null) {
                 word.setWord_target(word_target);
                 word.setWord_explain(explain);
-                insertWord(word, modifiedArray);
+                updateFile(userArray, userList);
+                if ((temp = binarySearchWord(word_target, modifiedArray)) != null) {
+                    temp.setWord_explain(explain);
+                    updateFile(modifiedArray, modifiedList);
+                } else {
+                    insertWord(word, modifiedArray);
+                    updateFile(modifiedArray, modifiedList);
+                }
+                System.out.println("This word's explain has been modified!");
+                setNoti("This word's explain has been modified!");
+            } else if ((binarySearchWord(word_target, wordArray)) != null){
+                Word tempWord = new Word();
+                tempWord.setWord_target(word_target);
+                tempWord.setWord_explain(explain);
+                insertWord(tempWord, userArray);
+                insertWord(tempWord, modifiedArray);
                 updateFile(modifiedArray, modifiedList);
-                updateFile(wordArray, mainDictionary);
-                noti = "This word's explain has been modified!\n";
+                updateFile(userArray, userList);
+                System.out.println("This word's explain has been modified!");
+                setNoti("This word's explain has been modified!");
             } else {
-                noti = "Not found this word!\n";
+                System.out.println("Not found word!");
+                setNoti("Not found word!");
             }
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
-            noti = "Error!";
+            setNoti("Error!");;
         }
     }
+
 
     public static Word dictionaryLookup(String word_target) {
         Word w;
@@ -104,9 +145,22 @@ public class DictionaryManagement extends Dictionary{
             System.out.println("Enter the English word you want to look up:");
             word_target = scanner.nextLine().toLowerCase();
         }
-        if ((w = binarySearchWord(word_target, wordArray)) != null) {
+        if (isWordExists(deletedArray, word_target)) {
+            System.out.println("This word was deleted!");
+            setNoti("This word was deleted!");
+        } else if (isWordExists(userArray, word_target)) {
+            w = binarySearchWord(word_target, userArray);
             if (!isWordExists(recentWordArray, w.getWord_target())) {
-                insertWord(w, recentWordArray);
+                Word tempWord = new Word(w.getWord_target(), "");
+                insertWord(tempWord, recentWordArray);
+                updateFile(recentWordArray, recentWordList);
+            }
+            return w;
+        } else if ((w = binarySearchWord(word_target, wordArray)) != null) {
+            if (!isWordExists(recentWordArray, w.getWord_target())) {
+                Word tempWord = new Word(w.getWord_target(), "");
+                insertWord(tempWord, recentWordArray);
+                updateFile(recentWordArray, recentWordList);
             }
             return w;
         }
@@ -118,23 +172,25 @@ public class DictionaryManagement extends Dictionary{
         ArrayList<String> suggestionArray = new ArrayList<>();
         if (word_target == null || word_target.isEmpty()) {
             System.out.println("Searching word: ");
-            word_target = scanner.nextLine().toLowerCase();
+            word_target = scanner.nextLine();
         }
+        word_target = word_target.toLowerCase();
         int index = 0;
         int position = binarySearchPosition(word_target, wordArray);
         int sizeOfWordArray = wordArray.size();
         if (position < 0) {
-            noti = "Not found!\n";
+            System.out.println("Not found!");
+            setNoti("Not found!");
         } else {
             do {
-                String temp = wordArray.get(position + index).getWord_target();
-                if (temp.startsWith(word_target)) {
+                String temp = wordArray.get(position + index).getWord_target().toLowerCase();
+                if (temp.startsWith(word_target) && !isWordExists(deletedArray, temp)) {
                     suggestionArray.add(temp);
                     index++;
                 } else {
                     break;
                 }
-            } while ((index + position) < sizeOfWordArray && index < 10);
+            } while ((index + position) < sizeOfWordArray);
         }
         return suggestionArray;
     }
@@ -143,44 +199,68 @@ public class DictionaryManagement extends Dictionary{
         try {
             File file = new File(filename);
             Scanner fileScanner = new Scanner(file);
+            String word_target;
+            String word_explain = "";
+            Word currentWord = null;
             while (fileScanner.hasNextLine()) {
-                String data = fileScanner.nextLine();
-                String[] splitData = data.split("\t");
-                if (splitData.length >= 2) {
-                    Word w = new Word();
-                    w.setWord_target(splitData[0]);
-                    w.setWord_explain(splitData[1]);
-                    if (!isWordExists(list, w.getWord_target())) {
-                        insertWord(w, list);
+                String line = fileScanner.nextLine();
+                int lengthLine = line.length();
+                if (line.startsWith("*")) {
+                    if (currentWord != null) {
+                        if (!isWordExists(list, currentWord.getWord_target())) {
+                            insertWord(currentWord, list);
+                        }
                     }
+                    int index = 0;
+                    while (index < lengthLine && line.charAt(index) != ' ') {
+                        index++;
+                    }
+                    currentWord = new Word();
+                    try {
+                        word_target = line.substring(1, index).trim().toLowerCase();
+                        currentWord.setWord_target(word_target);
+                        word_explain = line.substring(index, lengthLine).replaceAll("\\s+", " ").trim();
+                        currentWord.setWord_explain(word_explain);
+                    } catch (Exception e) {
+                        System.out.println("Error" + e);
+                        setNoti("Error" + e);
+                    }
+                } else {
+                    word_explain += line.replaceAll("\\s+", " ");
+                    currentWord.setWord_explain(word_explain);
+                }
+            }
+            if (currentWord != null) {
+                if (!isWordExists(list, currentWord.getWord_target())) {
+                    insertWord(currentWord, list);
                 }
             }
             fileScanner.close();
-            System.out.println("Data inserted successfully.");
-            noti = "Data inserted successfully.";
+            System.out.println("Data in " + filename + " inserted successfully.");
         } catch (FileNotFoundException e) {
-            System.out.println("Find not found");
-            noti = "Find not found";
+            System.out.println("File not found");
             e.printStackTrace();
         }
     }
 
     public static void insertAllFile() {
         insertFromFileToList(wordArray, mainDictionary);
-        insertFromFileToList(addedArray, addedList );
+        insertFromFileToList(addedArray, addedList);
         insertFromFileToList(deletedArray, deletedList);
         insertFromFileToList(modifiedArray, modifiedList);
         insertFromFileToList(recentWordArray, recentWordList);
+        insertFromFileToList(userArray, userList);
     }
 
     public static void updateFile(ArrayList<Word> arrayList, String fileName) {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(fileName));
             for (Word w : arrayList) {
-                String line = w.getWord_target() + "\t" + w.getWord_explain();
+                String line = "*" + w.getWord_target() + " \t" + w.getWord_explain();
                 writer.write(line);
                 writer.newLine();
             }
+            System.out.println("Update file " + fileName + " Complete!");
             writer.close();
         } catch (IOException e) {
             System.out.println("An error occurred.");
@@ -193,6 +273,7 @@ public class DictionaryManagement extends Dictionary{
         updateFile(deletedArray, deletedList);
         updateFile(modifiedArray, modifiedList);
         updateFile(recentWordArray, recentWordList);
+        updateFile(userArray, userList);
         updateFile(wordArray, mainDictionary);
     }
 
@@ -274,16 +355,16 @@ public class DictionaryManagement extends Dictionary{
         wordList.add(left, newWord);
     }
 
-    public static void textToSpeech(String text) {
-        if (text == null || text.isEmpty()) {
+    public static void textToSpeech(String word) {
+        if (word == null || word.isEmpty()) {
             System.out.println("Enter word:");
-            text = scanner.nextLine();
+            word = scanner.nextLine().toLowerCase();
         }
         System.setProperty("freetts.voices", "com.sun.speech.freetts.en.us.cmu_us_kal.KevinVoiceDirectory");
         VoiceManager voiceManager = VoiceManager.getInstance();
         Voice syntheticVoice = voiceManager.getVoice("kevin16");
         syntheticVoice.allocate();
-        syntheticVoice.speak(text);
+        syntheticVoice.speak(word);
         syntheticVoice.deallocate();
     }
 

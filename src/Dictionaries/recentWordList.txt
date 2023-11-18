@@ -1,14 +1,16 @@
-chicken	con ga nhe
-chicken	con ga nhe
-chicken	con ga nhe
-abstract	truu tuong
-architechture	kien truc
-attach	gan
-attack	 tan cong
-chicken	con ga nhe
-chicken	con ga nhe
-hello	xin chao
-hi	xin chao
-mouse	con chuot
-moustech	ria
-zeus	than sam
+*a-pac-thai 	
+*a-road 	
+*aardvark 	
+*coat 	
+*cup 	
+*haemal 	
+*heaven 	
+*hell 	
+*hello 	
+*high 	
+*hramsa 	
+*king 	
+*kit 	
+*supper 	
+*thanks 	
+*you've 	

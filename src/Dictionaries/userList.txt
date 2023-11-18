@@ -1,16 +1,15 @@
 *abandon 	bỏ rơi
 *adapt 	thích nghi
 *adopt 	nhận nuôi
+*air 	không khí
 *amazing 	tuyệt
 *box 	hộp
 *buy 	mua
 *coat 	áo khoác
-*cup 	cái cốc
 *double 	2
 *enter 	Nhập
 *funny 	hài hước
 *ground 	mặt đất
-*hand 	ban tay
 *heaven 	thiên đường
 *hell 	địa ngục
 *hello 	xin chao b
@@ -20,15 +19,23 @@
 *king 	vua
 *leg 	chân
 *ok 	ok
-*phone 	điện thoại
+*phone 	điện thoại này
 *screen 	màn hình
 *shoot 	bắn
+*sky 	bau troi nay
+*speaker 	loa loa loa loa
+*super 	siêu
 *supper 	bữa tối
 *table 	cái bàn
 *test 	thử
 *thin 	gần
-*what 	cai gi
+*umbrella 	cái ô này
+*wait 	chờ đợi
+*what 	cai gi the
 *what'sup 	co gi hot
 *why 	tại sao
 *wifi 	wifi
+*wind 	gió
 *window 	cua so nay
+*yogurt 	sữa chua
+*young 	trẻ

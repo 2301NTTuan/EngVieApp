@@ -3,14 +3,17 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class DictionaryCommandLine extends DictionaryManagement{
-    public void dictionaryBasic() {
-        showAllWords();
+
+    /** Show all main dictionary. But recommend don't do this action
+    because this dictionary has so many words that program can get error when show it.*/
+    public static void showMainDictionary() {
+        showDictionary(wordArray);
     }
 
-    public void showAllWords() {
+    public static void showDictionary(ArrayList<Word> arrayList) {
         System.out.printf("%-5s%c %-18s%c %-23s%n", "No", '|', "English", '|', "Vietnamese");
         int index = 1;
-        for (Word w : Dictionary.wordArray) {
+        for (Word w : arrayList) {
             System.out.printf("%-5d%c %-18s%c %-23s%n", index, '|', w.getWord_target(), '|', w.getWord_explain());
             index++;
         }
@@ -21,7 +24,7 @@ public class DictionaryCommandLine extends DictionaryManagement{
         while (action != 0) {
             System.out.println("Welcome to My Application!\n"
                     + "[0] Exit \n[1] Add\n"
-                    + "[2] Remove\n[3] Update\n"
+                    + "[2] Remove\n[3] Modify\n"
                     + "[4] Display\n[5] Lookup\n"
                     + "[6] Search\n[7] Game\n"
                     + "[8] Import from file\n[9] Export to file\n"
@@ -49,12 +52,37 @@ public class DictionaryCommandLine extends DictionaryManagement{
                         break;
                     case 3:
                         // Update functionality
-                        System.out.println("Edit Fuction!");
+                        System.out.println("Modify Fuction!");
                         modifyWord("", "");
                         break;
                     case 4:
                         // Display functionality
-                        showAllWords();
+                        int option;
+                        System.out.println("What dictionary do you want to show?\n"
+                                + "1. Added Words\n"
+                                + "2. Modified Words\n"
+                                + "3. Deleted Words\n"
+                                + "4. Recent Words\n"
+                                + "5. User Words\n"
+                                + "Your option: ");
+                        option = scanner.nextInt();
+                        switch (option) {
+                            case 1:
+                                showDictionary(addedArray);
+                                break;
+                            case 2:
+                                showDictionary(modifiedArray);
+                                break;
+                            case 3:
+                                showDictionary(deletedArray);
+                                break;
+                            case 4:
+                                showDictionary(recentWordArray);
+                                break;
+                            case 5:
+                                showDictionary(userArray);
+                                break;
+                        }
                         break;
                     case 5:
                         // Lookup functionality

@@ -1,2 +1,13 @@
-attach	gan vao
-chicken	con ga nhe
+*air 	không khí
+*king 	vua
+*phone 	điện thoại này
+*sky 	bau troi nay
+*speaker 	loa loa loa loa
+*super 	siêu
+*supper 	bữa tối
+*umbrella 	cái ô này
+*wait 	chờ đợi
+*what 	cai gi the
+*wind 	gió
+*yogurt 	sữa chua
+*young 	trẻ
