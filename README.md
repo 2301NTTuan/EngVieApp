@@ -1,22 +1,32 @@
 # EngVieApp
 Ứng dụng học Tiếng Anh
-Thành viên:
+I. Thành viên:
 - Nguyễn Trung Tuấn - MSSV: 20020736
 - Ninh Vân Trường - MSSV:
 - Nguyễn Tiến Quan - MSSV:
 
-Các chức năng: 
+II. Các chức năng: 
+1. Chức năng quản lý
 - Tìm kiếm từ vựng
 - Thêm từ vựng
 - Sửa từ vựng
 - Xóa từ vựng
-- Xem các từ vựng đã thêm, đã sửa, đã xóa, và các từ tìm kiếm gần đây
+2. Chức năng xem
+- Các từ vựng đã thêm
+- Các từ vựng đã sửa
+- Các từ vựng đã xóa
+- Các từ tìm kiếm gần đây
+- Danh sách từ vựng của người dùng
+- Chú ý: Không cho phép xem thư viện từ vựng chính.
 
-Hình ảnh giao diện dòng lệnh:
+III. Hình ảnh 
+1. Giao diện dòng lệnh:
 
-![image](https://github.com/2301NTTuan/EngVieApp/assets/129706740/acab3b61-a8eb-42ec-aedd-8989a286563e)
+![image](https://github.com/2301NTTuan/EngVieApp/assets/129706740/1eaa544f-9230-40c0-9436-46597f982749)
 
-Hình ảnh giao diện đồ họa:
 
-![image](https://github.com/2301NTTuan/EngVieApp/assets/129706740/ceb9c8a1-604e-44f7-ba50-c168037adf3a)
+2. Giao diện đồ họa:
+
+![image](https://github.com/2301NTTuan/EngVieApp/assets/129706740/d4ad4bae-f024-41dc-84a6-1c6f29cd0e6a)
+
 
