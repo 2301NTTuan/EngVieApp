@@ -22,7 +22,7 @@ public class Dictionary {
     public static ArrayList<Word> userArray = new ArrayList<>();
 
     public static String getPath () {
-        return Paths.get("EngVieApp").toAbsolutePath() + "/src/Dictionaries/";
+        return Paths.get("").toAbsolutePath() + "/src/Dictionaries/";
     }
 
 }
