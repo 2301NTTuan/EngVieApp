@@ -21,6 +21,7 @@
 *leg 	chân
 *ok 	ok
 *phone 	điện thoại
+*red 	đỏ
 *screen 	màn hình
 *shoot 	bắn
 *supper 	bữa tối

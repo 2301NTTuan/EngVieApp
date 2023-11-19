@@ -21,8 +21,8 @@ public class MainGraphic {
     JButton speakerBtn = new JButton("Speak");
     JButton recentBtn = new JButton("Recent Words");
     JButton userBtn = new JButton("User Words");
-
-    private JButton selectedButton = null;
+    JButton searchBtn = new JButton("Search");
+    JButton selectedButton = null;
 
     static JList<Object> suggestionsList = new JList<>();
     static JScrollPane listSuggestionContainer = new JScrollPane(suggestionsList);
@@ -33,39 +33,40 @@ public class MainGraphic {
     static ArrayList<String> foundSuggestionList = new ArrayList<>();
 
     private void setupPanel() {
-        this.panel.setBounds(recPanel);
-        this.panel.setLayout(null);
-        this.panel.setBackground(Color.white);
-        this.panel.add(listSuggestionContainer);
-        this.panel.add(borderSeachBox);
-        this.panel.add(textScrollPane);
-        this.panel.add(headerPanel);
-        this.panel.add(dictionaryLabel);
+        panel.setBounds(recPanel);
+        panel.setLayout(null);
+        panel.setBackground(Color.white);
+        panel.add(listSuggestionContainer);
+        panel.add(borderSeachBox);
+        panel.add(textScrollPane);
+        panel.add(headerPanel);
+        panel.add(dictionaryLabel);
 
-        this.dictionaryLabel.setForeground(Color.white);
-        this.dictionaryLabel.setText("Dictionary");
-        this.dictionaryLabel.setFont(new Font("Times New Roman",Font.ITALIC,23));
-        this.dictionaryLabel.setBounds(380,10,200,35);
+        dictionaryLabel.setForeground(Color.white);
+        dictionaryLabel.setText("Dictionary");
+        dictionaryLabel.setFont(new Font("Times New Roman",Font.ITALIC,23));
+        dictionaryLabel.setBounds(380,10,200,35);
 
         Color bkgColor = new Color(41, 162, 162);
-        this.headerPanel.setBounds(0,0, 910, 140);
-        this.headerPanel.setBackground(bkgColor);
-        this.headerPanel.add(addBtn);
-        this.headerPanel.add(removeBtn);
-        this.headerPanel.add(modifyBtn);
-        this.headerPanel.add(recentBtn);
-        this.headerPanel.add(dictionaryLabel);
-        this.headerPanel.add(userBtn);
-        this.headerPanel.add(speakerBtn);
-        this.headerPanel.setLayout(null);
+        headerPanel.setBounds(0,0, 910, 140);
+        headerPanel.setBackground(bkgColor);
+        headerPanel.add(addBtn);
+        headerPanel.add(removeBtn);
+        headerPanel.add(modifyBtn);
+        headerPanel.add(recentBtn);
+        headerPanel.add(dictionaryLabel);
+        headerPanel.add(userBtn);
+        headerPanel.add(speakerBtn);
+        headerPanel.add(searchBtn);
+        headerPanel.setLayout(null);
 
 
-        this.windowApp.add(panel, BorderLayout.CENTER);
-        this.windowApp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.windowApp.setTitle("ENG-VIE Dictionary");
-        this.windowApp.pack();
-        this.windowApp.setVisible(true);
-        this.windowApp.setSize(910,960);
+        windowApp.add(panel, BorderLayout.CENTER);
+        windowApp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        windowApp.setTitle("ENG-VIE Dictionary");
+        windowApp.pack();
+        windowApp.setVisible(true);
+        windowApp.setSize(910,960);
     }
 
     private void setupGeneralButton(JButton button, ActionListener actionListener) {
@@ -80,37 +81,42 @@ public class MainGraphic {
 
     private void setupButton() {
 
-        this.removeBtn.setBounds(5, 50, 165, 35);
-        this.removeBtn.setBorderPainted(false);
-        this.removeBtn.setFont(new Font("Times New Roman", Font.ITALIC,20));
+        removeBtn.setBounds(5, 50, 165, 35);
+        removeBtn.setBorderPainted(false);
+        removeBtn.setFont(new Font("Times New Roman", Font.ITALIC,20));
         setupGeneralButton(removeBtn, removeBtnListener);
 
-        this.modifyBtn.setBounds(185, 50, 165, 35);
-        this.modifyBtn.setBorderPainted(false);
-        this.modifyBtn.setFont(new Font("Times New Roman", Font.ITALIC,20));
+        modifyBtn.setBounds(185, 50, 165, 35);
+        modifyBtn.setBorderPainted(false);
+        modifyBtn.setFont(new Font("Times New Roman", Font.ITALIC,20));
         setupGeneralButton(modifyBtn, modifyBtnListener);
 
 
-        this.recentBtn.setBounds(365, 50, 165, 35);
-        this.recentBtn.setBorderPainted(false);
-        this.recentBtn.setFont(new Font("Times New Roman", Font.ITALIC,20));
+        recentBtn.setBounds(365, 50, 165, 35);
+        recentBtn.setBorderPainted(false);
+        recentBtn.setFont(new Font("Times New Roman", Font.ITALIC,20));
         setupGeneralButton(recentBtn, recentBtnListener);
 
 
 
-        this.addBtn.setBounds(545, 50, 165, 35);
-        this.addBtn.setFont(new Font("Times New Roman", Font.ITALIC,20));
-        this.addBtn.setBorderPainted(false);
+        addBtn.setBounds(545, 50, 165, 35);
+        addBtn.setFont(new Font("Times New Roman", Font.ITALIC,20));
+        addBtn.setBorderPainted(false);
         setupGeneralButton(addBtn, addBtnListener);
 
-        this.userBtn.setBounds(725, 50, 165, 35);
-        this.userBtn.setBorderPainted(false);
-        this.userBtn.setFont(new Font("Times New Roman", Font.ITALIC,20));
+        userBtn.setBounds(725, 50, 165, 35);
+        userBtn.setBorderPainted(false);
+        userBtn.setFont(new Font("Times New Roman", Font.ITALIC,20));
         setupGeneralButton(userBtn, usesrBtnListener);
 
-        this.speakerBtn.setBounds(160, 95, 100, 35);
-        this.speakerBtn.setBorderPainted(false);
-        this.speakerBtn.setFont(new Font("Times New Roman", Font.ITALIC,20));
+        searchBtn.setBounds(630, 95, 100, 35);
+        searchBtn.setBorderPainted(false);
+        searchBtn.setFont(new Font("Times New Roman", Font.ITALIC,20));
+        setupGeneralButton(searchBtn, searchBtnListener);
+
+        speakerBtn.setBounds(160, 95, 100, 35);
+        speakerBtn.setBorderPainted(false);
+        speakerBtn.setFont(new Font("Times New Roman", Font.ITALIC,20));
         setupGeneralButton(speakerBtn, speakBtnListener);
         speakerBtn.setVisible(false);
     }
@@ -137,7 +143,7 @@ public class MainGraphic {
         suggestionsList.setFixedCellWidth(250);
         suggestionsList.setFixedCellHeight(40);
         suggestionsList.setFont(new Font("Times New Roman", Font.BOLD,22));
-        suggestionsList.addListSelectionListener(this.selectedWordListener);
+        suggestionsList.addListSelectionListener(selectedWordListener);
 
 
 
@@ -176,12 +182,12 @@ public class MainGraphic {
             public void actionPerformed(ActionEvent e) {
                 if (selectedButton != null) {
                     if (!button.equals(selectedButton)) {
-                        button.setBackground(new Color(19, 58, 58));
+                        button.setBackground(new Color(30, 115, 115));
                         selectedButton.setBackground(Color.cyan);
                         selectedButton = button;
                     }
                 } else {
-                    button.setBackground(new Color(19, 58, 58));
+                    button.setBackground(new Color(30, 115, 115));
                     selectedButton = button;
                 }
 
@@ -233,6 +239,20 @@ public class MainGraphic {
         suggestionsList.clearSelection();
         String recentWordString = "recent Word: \n" + wordString(Dictionary.recentWordArray);
         generalTextPanel.setText(recentWordString);
+    };
+
+    ActionListener searchBtnListener = search -> {
+
+        listSuggestionContainer.setVisible(false);
+        suggestionsList.clearSelection();
+        Word searchWord = DictionaryManagement.dictionaryLookup(searchWordBox.getText());
+        if (searchWord == null) {
+            generalTextPanel.setText("Not found! Due to " + DictionaryManagement.getNoti());
+        } else {
+            speakerBtn.setVisible(true);
+            String searchedWord = "Searched Word: \n" + searchWord.getWord_target() + " : " + searchWord.getWord_explain();
+            generalTextPanel.setText(searchedWord);
+        }
     };
 
     public static void generalBtnSetUp(ArrayList<Word> arrayList) {

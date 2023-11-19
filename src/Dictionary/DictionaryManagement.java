@@ -207,8 +207,15 @@ public class DictionaryManagement extends Dictionary{
                 int lengthLine = line.length();
                 if (line.startsWith("*")) {
                     if (currentWord != null) {
-                        if (!isWordExists(list, currentWord.getWord_target())) {
-                            insertWord(currentWord, list);
+                        String temp = currentWord.getWord_explain();
+                        if (!temp.isEmpty()) {
+                            String[] splitData = temp.split(", ");
+                            if (splitData.length >= 4) {
+                                currentWord.setWord_explain(splitData[0] + ", " + splitData[1] + ", " + splitData[2] + ", " + splitData[3]);
+                            }
+                            if (!isWordExists(list, currentWord.getWord_target())) {
+                                insertWord(currentWord, list);
+                            }
                         }
                     }
                     int index = 0;

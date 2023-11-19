@@ -23,7 +23,7 @@ public class SubGraphic implements ActionListener {
     }
 
     public void setNoti(String noti) {
-        this.noti = noti;
+        noti = noti;
     }
 
 
@@ -90,7 +90,7 @@ public class SubGraphic implements ActionListener {
     public void setModifyFunction() {
         subWindow.setTitle("Modify Function");
         acceptBtn.setText("Modify");
-        acceptBtn.addActionListener(this.modifyWordButton);
+        acceptBtn.addActionListener(modifyWordButton);
         functionLabel.setText("Enter Word");
         definitionLabel.setText("Definition");
     }
@@ -98,7 +98,7 @@ public class SubGraphic implements ActionListener {
     public void setAddFunction() {
         subWindow.setTitle("Addition Function");
         acceptBtn.setText("Add");
-        acceptBtn.addActionListener(this.addWordButton);
+        acceptBtn.addActionListener(addWordButton);
         functionLabel.setText("Enter Word");
         definitionLabel.setText("Definition");
     }

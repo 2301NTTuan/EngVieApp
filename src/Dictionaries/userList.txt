@@ -8,6 +8,7 @@
 *coat 	áo khoác
 *double 	2
 *enter 	Nhập
+*far 	xa
 *funny 	hài hước
 *ground 	mặt đất
 *heaven 	thiên đường
@@ -15,11 +16,12 @@
 *hello 	xin chao b
 *hesistate 	do dự
 *hi 	xin chao
+*high 	cao nay
 *hihi 	cười
-*king 	vua
 *leg 	chân
 *ok 	ok
 *phone 	điện thoại này
+*red 	đỏ
 *screen 	màn hình
 *shoot 	bắn
 *sky 	bau troi nay

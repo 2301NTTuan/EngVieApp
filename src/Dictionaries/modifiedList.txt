@@ -1,4 +1,6 @@
 *air 	không khí
+*far 	xa
+*high 	cao nay
 *king 	vua
 *phone 	điện thoại này
 *sky 	bau troi nay
