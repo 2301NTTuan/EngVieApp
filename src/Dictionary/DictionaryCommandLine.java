@@ -1,6 +1,7 @@
 package Dictionary;
 import java.util.ArrayList;
 import java.util.Scanner;
+import Dictionary.Game;
 
 public class DictionaryCommandLine extends DictionaryManagement{
 
@@ -107,6 +108,15 @@ public class DictionaryCommandLine extends DictionaryManagement{
                         break;
                     case 7:
                         // Game functionality
+                        Game game = new Game();
+                        do {
+                            game.getQuestion();
+                            game.answerQ("");
+                            boolean mark = game.playAgian("");
+                            if (!mark) {
+                                break;
+                            }
+                        } while (true);
                         break;
                     case 8:
                         // Import from file functionality
