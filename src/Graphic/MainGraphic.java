@@ -5,11 +5,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
-import javax.swing.event.CellEditorListener;
 import javax.swing.event.ListSelectionListener;
-import Dictionary.Game;
+import Graphic.SubGraphic;
 
 public class MainGraphic {
+    SubGraphic removeWordGraphic;
+    SubGraphic modifyWordGraphic;
+    SubGraphic addWordGraphic;
     JFrame windowApp = new JFrame();
     JPanel panel = new JPanel();
     JPanel headerPanel = new JPanel();
@@ -23,20 +25,16 @@ public class MainGraphic {
     JButton speakerBtn = new JButton("Speak");
     JButton recentBtn = new JButton("Recent Words");
     JButton userBtn = new JButton("User Words");
-    JButton searchBtn = new JButton("Search");
-    JButton gameBtn = new JButton("Game");
-    JButton okAnswer = new JButton("OK");
+    static JButton searchBtn = new JButton("Search");
     JButton selectedButton = null;
 
     static JList<Object> suggestionsList = new JList<>();
     static JScrollPane listSuggestionContainer = new JScrollPane(suggestionsList);
     static JTextField searchWordBox = new JTextField();
-    JTextField answerBox = new JTextField();
     static JTextArea generalTextPanel = new JTextArea();
     JScrollPane textScrollPane = new JScrollPane(generalTextPanel);
     JLabel dictionaryLabel = new JLabel();
     static ArrayList<String> foundSuggestionList = new ArrayList<>();
-    Game game1 = new Game();
 
     private void setupPanel() {
         panel.setBounds(recPanel);
@@ -64,7 +62,6 @@ public class MainGraphic {
         headerPanel.add(userBtn);
         headerPanel.add(speakerBtn);
         headerPanel.add(searchBtn);
-        headerPanel.add(gameBtn);
         headerPanel.setLayout(null);
 
 
@@ -126,17 +123,6 @@ public class MainGraphic {
         speakerBtn.setFont(new Font("Times New Roman", Font.ITALIC,20));
         setupGeneralButton(speakerBtn, speakBtnListener);
         speakerBtn.setVisible(false);
-
-        gameBtn.setBounds(745, 95, 100, 35);
-        gameBtn.setBorderPainted(false);
-        gameBtn.setFont(new Font("Times New Roman", Font.ITALIC,20));
-        setupGeneralButton(gameBtn, gameBtnListener);
-
-        okAnswer.setBounds(300, 135, 100, 35);
-        okAnswer.setBorderPainted(false);
-        okAnswer.setFont(new Font("Times New Roman", Font.ITALIC,20));
-        setupGeneralButton(okAnswer, okBtnListener);
-        okAnswer.setVisible(false);
     }
 
     private void setupOther() {
@@ -176,13 +162,6 @@ public class MainGraphic {
         generalTextPanel.setFont(new Font("Times New Roman",Font.ITALIC,23));
         generalTextPanel.setWrapStyleWord(true);
         generalTextPanel.setLineWrap(true);
-        generalTextPanel.add(answerBox);
-        generalTextPanel.add(okAnswer);
-
-        answerBox.setEnabled(true);
-        answerBox.setBounds(190, 135, 100, 35);
-        answerBox.setFont(new Font("Times New Roman", Font.PLAIN,22));
-        answerBox.setVisible(false);
     }
 
     public MainGraphic() {
@@ -249,8 +228,7 @@ public class MainGraphic {
     public static String wordString(ArrayList<Word> wordArrayList) {
         String string = "";
         for (Word w : wordArrayList) {
-
-            if (w.getWord_explain().isEmpty()) {
+            if (w.getWord_explain().isEmpty() || wordArrayList == Dictionary.deletedArray) {
                 string += " - " + w.getWord_target() + "\n";
             } else {
                 string += "  - " + w.getWord_target() + " : " + w.getWord_explain() + "\n";
@@ -260,6 +238,7 @@ public class MainGraphic {
     }
 
     ActionListener recentBtnListener = showRecentWord -> {
+        closeAllSubGraphic();
         listSuggestionContainer.setVisible(false);
         suggestionsList.clearSelection();
         String recentWordString = "recent Word: \n" + wordString(Dictionary.recentWordArray);
@@ -270,17 +249,19 @@ public class MainGraphic {
 
         listSuggestionContainer.setVisible(false);
         suggestionsList.clearSelection();
-        Word searchWord = DictionaryManagement.dictionaryLookup(searchWordBox.getText());
-        if (searchWord == null) {
-            generalTextPanel.setText("Not found! Due to " + DictionaryManagement.getNoti());
-        } else {
-            speakerBtn.setVisible(true);
-            String searchedWord = "Searched Word: \n" + searchWord.getWord_target() + " : " + searchWord.getWord_explain();
-            generalTextPanel.setText(searchedWord);
+        if (!searchWordBox.getText().isEmpty()) {
+            Word searchWord = DictionaryManagement.dictionaryLookup(searchWordBox.getText().replaceAll("\\s+", " ").trim());
+            if (searchWord == null) {
+                generalTextPanel.setText("Not found! Due to " + DictionaryManagement.getNoti());
+            } else {
+                speakerBtn.setVisible(true);
+                String searchedWord = "Searched Word: \n" + searchWord.getWord_target() + " : " + searchWord.getWord_explain();
+                generalTextPanel.setText(searchedWord);
+            }
         }
     };
 
-    public static void generalBtnSetUp(ArrayList<Word> arrayList) {
+    public static void showAddAndModify(ArrayList<Word> arrayList) {
         suggestionsList.clearSelection();
         listSuggestionContainer.setVisible(false);
         searchWordBox.setText("");
@@ -289,59 +270,45 @@ public class MainGraphic {
             List = "Added Word List: \n" + wordString(arrayList);
         } else if (arrayList == Dictionary.modifiedArray){
             List = "Modified Word List: \n" + wordString(arrayList);
-        } else if (arrayList == Dictionary.deletedArray) {
-            List = "Deleted Word List: \n" + wordString(arrayList);
         } else {
-            List = "User Word List: \n" + wordString(arrayList);
+            List = "Deleted Word List: \n" + wordString(arrayList);
         }
         generalTextPanel.setText(List);
     }
 
     ActionListener addBtnListener = add -> {
+        closeAllSubGraphic();
         speakerBtn.setVisible(false);
-        generalBtnSetUp(Dictionary.addedArray);
-        new SubGraphic("addWord", windowApp);
+        showAddAndModify(Dictionary.addedArray);
+        addWordGraphic = new SubGraphic("addWord", windowApp);
     };
 
 
     ActionListener modifyBtnListener = modify -> {
+        closeAllSubGraphic();
         speakerBtn.setVisible(false);
-        generalBtnSetUp(Dictionary.modifiedArray);
-        new SubGraphic("modifyWord", windowApp);
+        showAddAndModify(Dictionary.modifiedArray);
+        modifyWordGraphic = new SubGraphic("modifyWord", windowApp);
     };
 
     ActionListener removeBtnListener = remove -> {
+        closeAllSubGraphic();
         speakerBtn.setVisible(false);
-        int selectedWord = suggestionsList.getSelectedIndex();
-        if (selectedWord != -1 && !foundSuggestionList.isEmpty()) {
-            Object[] options = {"Yes", "No"};
-            String wordToDelete = foundSuggestionList.get(selectedWord);
-
-            String message = String.format("Are you sure you want to delete \"%s\"?", wordToDelete);
-            int n = JOptionPane.showOptionDialog(windowApp,
-                    message,
-                    "Yes No Question!",
-                    JOptionPane.YES_NO_CANCEL_OPTION,
-                    JOptionPane.WARNING_MESSAGE,
-                    null,
-                    options,
-                    options[1]);
-
-            if (n == JOptionPane.OK_OPTION) {
-                System.out.println("OKE");
-                DictionaryManagement.deleteWord(wordToDelete);
-                foundSuggestionList.remove(selectedWord);
-                suggestionsList.setListData(foundSuggestionList.toArray());
-            }
-        } else {
-            listSuggestionContainer.setVisible(false);
-            searchWordBox.setText("");
-            suggestionsList.clearSelection();
-            String removedList = "Removed Word list: \n" + wordString(Dictionary.deletedArray);
-            generalTextPanel.setText(removedList);
-        }
+        showAddAndModify(Dictionary.deletedArray);
+        removeWordGraphic = new SubGraphic("removeWord", windowApp);
     };
 
+    public void closeAllSubGraphic() {
+        if (addWordGraphic != null) {
+            addWordGraphic = null;
+        }
+        if (removeWordGraphic != null) {
+            removeWordGraphic = null;
+        }
+        if (modifyWordGraphic != null) {
+            modifyWordGraphic = null;
+        }
+    }
 
     ActionListener speakBtnListener = speak -> {
         int selectedWord = suggestionsList.getSelectedIndex();
@@ -372,42 +339,13 @@ public class MainGraphic {
     };
 
     ActionListener usesrBtnListener = showUserWord -> {
-        generalBtnSetUp(Dictionary.userArray);
-    };
-
-    public void playGame() {
-        answerBox.setVisible(true);
-        okAnswer.setVisible(true);
-        game1.getQuestion();
-        generalTextPanel.setText(game1.getQuestionForGraphic);
-    }
-    ActionListener gameBtnListener = game -> {
+        closeAllSubGraphic();
         speakerBtn.setVisible(false);
         suggestionsList.clearSelection();
         listSuggestionContainer.setVisible(false);
         searchWordBox.setText("");
-        playGame();
-    };
-
-    ActionListener okBtnListener = OK -> {
-        String answerQuestion = answerBox.getText().replaceAll("\\s+", " ").trim();
-        if (game1.markFuction == 1) {
-            if (Integer.parseInt(answerQuestion) >= 1 && Integer.parseInt(answerQuestion) <= 4) {
-                game1.answerQ(answerQuestion);
-                generalTextPanel.setText(game1.getQuestionForGraphic + game1.getNoti());
-                answerBox.setText("");
-            }
-        } else if (game1.markFuction == 2){
-            if (answerQuestion.equalsIgnoreCase("y")){
-                answerBox.setText("");
-                playGame();
-            } else if (answerQuestion.equalsIgnoreCase("n")){
-                generalTextPanel.setText("You Stopped Game!");
-                answerBox.setVisible(false);
-                okAnswer.setVisible(false);
-                answerBox.setText("");
-            }
-        }
+        String userList = "User Words list: \n" + wordString(Dictionary.userArray);
+        generalTextPanel.setText(userList);
     };
 
 }

@@ -3,6 +3,7 @@ package Dictionary;
 import Graphic.MainGraphic;
 import java.util.Scanner;
 
+//Class chứa phương thức để chạy APP tiếng anh. Có thể lựa chọn 1 trong 2 giao diện: đồ họa hoặc dòng lệnh
 public class Main {
     public static int option = -1;
     public static void main(String[] args) throws Exception {
@@ -37,6 +38,4 @@ public class Main {
       }while (option != 0);
 
     }
-     // DictionaryManagement.insertAllFile();
-    //  DictionaryCommandLine.showMainDictionary();
 }

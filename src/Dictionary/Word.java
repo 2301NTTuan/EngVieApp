@@ -1,7 +1,11 @@
 package Dictionary;
 
 public class Word {
+
+    //Từ tiếng Anh
     private String word_target;
+
+    //Định nghĩa tiếng Việt của từ tiếng Anh
     private String word_explain;
 
     public Word(String word_target, String word_explain) {

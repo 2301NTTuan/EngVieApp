@@ -1,16 +1,16 @@
 package Dictionary;
 import java.util.ArrayList;
 import java.util.Scanner;
-import Dictionary.Game;
 
+//Class quản lý giao diện dòng lệnh của APP tiếng anh
 public class DictionaryCommandLine extends DictionaryManagement{
 
-    /** Show all main dictionary. But recommend don't do this action
-    because this dictionary has so many words that program can get error when show it.*/
+    //show toàn bộ thư viện chính. Do thư viện chính rất lớn vì vậy không nên show ra.
     public static void showMainDictionary() {
         showDictionary(wordArray);
     }
 
+    //Show các thư viện con
     public static void showDictionary(ArrayList<Word> arrayList) {
         System.out.printf("%-5s%c %-18s%c %-23s%n", "No", '|', "English", '|', "Vietnamese");
         int index = 1;
@@ -20,6 +20,7 @@ public class DictionaryCommandLine extends DictionaryManagement{
         }
     }
 
+    //Quản lý các lựa chọn trong APP tiếng anh
     public void dictionaryAdvanced() {
         int action = -23;
         while (action != 0) {
@@ -108,15 +109,6 @@ public class DictionaryCommandLine extends DictionaryManagement{
                         break;
                     case 7:
                         // Game functionality
-                        Game game = new Game();
-                        do {
-                            game.getQuestion();
-                            game.answerQ("");
-                            boolean mark = game.playAgian("");
-                            if (!mark) {
-                                break;
-                            }
-                        } while (true);
                         break;
                     case 8:
                         // Import from file functionality
