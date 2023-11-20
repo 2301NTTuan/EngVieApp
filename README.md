@@ -4,7 +4,7 @@
 I. Thành viên:
 - Nguyễn Trung Tuấn - MSSV: 20020736
 - Ninh Vân Trường - MSSV:
-- Nguyễn Tiến Quan - MSSV:
+- Bùi Tiến Quân - MSSV: 20020705
 
 II. Các chức năng: 
 1. Chức năng quản lý
