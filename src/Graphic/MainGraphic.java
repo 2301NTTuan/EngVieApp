@@ -26,15 +26,21 @@ public class MainGraphic {
     JButton recentBtn = new JButton("Recent Words");
     JButton userBtn = new JButton("User Words");
     static JButton searchBtn = new JButton("Search");
+    JButton gameBtn = new JButton("Game");
+    JButton okAnswer = new JButton("OK");
     JButton selectedButton = null;
 
     static JList<Object> suggestionsList = new JList<>();
     static JScrollPane listSuggestionContainer = new JScrollPane(suggestionsList);
     static JTextField searchWordBox = new JTextField();
+    JTextField answerBox = new JTextField();
+
     static JTextArea generalTextPanel = new JTextArea();
     JScrollPane textScrollPane = new JScrollPane(generalTextPanel);
     JLabel dictionaryLabel = new JLabel();
     static ArrayList<String> foundSuggestionList = new ArrayList<>();
+    Game game1 = new Game();
+
 
     private void setupPanel() {
         panel.setBounds(recPanel);
@@ -62,6 +68,7 @@ public class MainGraphic {
         headerPanel.add(userBtn);
         headerPanel.add(speakerBtn);
         headerPanel.add(searchBtn);
+        headerPanel.add(gameBtn);
         headerPanel.setLayout(null);
 
 
@@ -123,6 +130,17 @@ public class MainGraphic {
         speakerBtn.setFont(new Font("Times New Roman", Font.ITALIC,20));
         setupGeneralButton(speakerBtn, speakBtnListener);
         speakerBtn.setVisible(false);
+
+        gameBtn.setBounds(745, 95, 100, 35);
+        gameBtn.setBorderPainted(false);
+        gameBtn.setFont(new Font("Times New Roman", Font.ITALIC,20));
+        setupGeneralButton(gameBtn, gameBtnListener);
+
+        okAnswer.setBounds(300, 135, 100, 35);
+        okAnswer.setBorderPainted(false);
+        okAnswer.setFont(new Font("Times New Roman", Font.ITALIC,20));
+        setupGeneralButton(okAnswer, okBtnListener);
+        okAnswer.setVisible(false);
     }
 
     private void setupOther() {
@@ -162,6 +180,13 @@ public class MainGraphic {
         generalTextPanel.setFont(new Font("Times New Roman",Font.ITALIC,23));
         generalTextPanel.setWrapStyleWord(true);
         generalTextPanel.setLineWrap(true);
+        generalTextPanel.add(answerBox);
+        generalTextPanel.add(okAnswer);
+
+        answerBox.setEnabled(true);
+        answerBox.setBounds(190, 135, 100, 35);
+        answerBox.setFont(new Font("Times New Roman", Font.PLAIN,22));
+        answerBox.setVisible(false);
     }
 
     public MainGraphic() {
@@ -346,6 +371,40 @@ public class MainGraphic {
         searchWordBox.setText("");
         String userList = "User Words list: \n" + wordString(Dictionary.userArray);
         generalTextPanel.setText(userList);
+    };
+
+    public void playGame() {
+        answerBox.setVisible(true);
+        okAnswer.setVisible(true);
+        game1.getQuestion();
+        generalTextPanel.setText(game1.getQuestionForGraphic);
+    }
+    ActionListener gameBtnListener = game -> {
+        speakerBtn.setVisible(false);
+        suggestionsList.clearSelection();
+        listSuggestionContainer.setVisible(false);
+        searchWordBox.setText("");
+        playGame();
+    };
+    ActionListener okBtnListener = OK -> {
+        String answerQuestion = answerBox.getText().replaceAll("\\s+", " ").trim();
+        if (game1.markFuction == 1) {
+            if (Integer.parseInt(answerQuestion) >= 1 && Integer.parseInt(answerQuestion) <= 4) {
+                game1.answerQ(answerQuestion);
+                generalTextPanel.setText(game1.getQuestionForGraphic + game1.getNoti());
+                answerBox.setText("");
+            }
+        } else if (game1.markFuction == 2){
+            if (answerQuestion.equalsIgnoreCase("y")){
+                answerBox.setText("");
+                playGame();
+            } else if (answerQuestion.equalsIgnoreCase("n")){
+                generalTextPanel.setText("You Stopped Game!");
+                answerBox.setVisible(false);
+                okAnswer.setVisible(false);
+                answerBox.setText("");
+            }
+        }
     };
 
 }
