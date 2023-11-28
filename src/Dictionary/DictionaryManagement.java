@@ -41,7 +41,7 @@ public class DictionaryManagement extends Dictionary{
             numberOfWords = scanner.nextInt();
         } while (numberOfWords <= 0);
         scanner.nextLine();
-        for (int i=0; i < numberOfWords; i ++) {
+        for (int i = 0; i < numberOfWords; i++) {
             System.out.println("Enter Word " + (i + 1));
             System.out.println("\t + Enter the English word: ");
             System.out.print("\t");
@@ -287,15 +287,15 @@ public class DictionaryManagement extends Dictionary{
                 int lengthLine = line.length();
                 if (line.startsWith("*")) {
                     if (currentWord != null) {
-                            if (!isWordExists(list, currentWord.getWord_target())) {
-                                insertWord(currentWord, list);
-                            }
+                        if (!isWordExists(list, currentWord.getWord_target())) {
+                            insertWord(currentWord, list);
+                        }
                     }
+                    currentWord = new Word();
                     int index = 0;
                     while (index < lengthLine && line.charAt(index) != ' ') {
                         index++;
                     }
-                    currentWord = new Word();
                     try {
                         word_target = line.substring(1, index).trim().toLowerCase();
                         currentWord.setWord_target(word_target);
@@ -346,7 +346,7 @@ public class DictionaryManagement extends Dictionary{
                 writer.write(line);
                 writer.newLine();
             }
-            System.out.println("Update file " + fileName + " Complete!");
+            //System.out.println("Update file " + fileName + " Complete!");
             writer.close();
         } catch (IOException e) {
             System.out.println("An error occurred.");

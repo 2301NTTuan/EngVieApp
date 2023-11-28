@@ -9,16 +9,29 @@ import javax.swing.event.ListSelectionListener;
 import Graphic.SubGraphic;
 
 public class MainGraphic {
+
+    //3 subgraphic objects
     SubGraphic removeWordGraphic;
     SubGraphic modifyWordGraphic;
     SubGraphic addWordGraphic;
+
+    //Main window
     JFrame windowApp = new JFrame();
+
+    //Main Panel
     JPanel panel = new JPanel();
+
+    //Header Panel
     JPanel headerPanel = new JPanel();
+
+    //Shape of Panel
     Rectangle recPanel = new Rectangle();
+
+    //Viền searching box
     JPanel borderSeachBox = new JPanel();
 
 
+    //Buttons
     JButton addBtn = new JButton("Added Words");
     JButton removeBtn = new JButton("Removed Words");
     JButton modifyBtn = new JButton("Modified Words");
@@ -30,15 +43,31 @@ public class MainGraphic {
     JButton okAnswer = new JButton("OK");
     JButton selectedButton = null;
 
+    //List of suggested word
     static JList<Object> suggestionsList = new JList<>();
+
+    //Area contains suggestion list
     static JScrollPane listSuggestionContainer = new JScrollPane(suggestionsList);
+
+    //Box to search
     static JTextField searchWordBox = new JTextField();
+
+    //Box to answer question
     JTextField answerBox = new JTextField();
 
+    //Area where to show dictionary, game, ...
     static JTextArea generalTextPanel = new JTextArea();
+
+    //Scroll bar
     JScrollPane textScrollPane = new JScrollPane(generalTextPanel);
+
+    //Name of App
     JLabel dictionaryLabel = new JLabel();
+
+    //Array to store suggestion list
     static ArrayList<String> foundSuggestionList = new ArrayList<>();
+
+    //Game Object
     Game game1 = new Game();
 
 
@@ -108,8 +137,6 @@ public class MainGraphic {
         recentBtn.setFont(new Font("Times New Roman", Font.ITALIC,20));
         setupGeneralButton(recentBtn, recentBtnListener);
 
-
-
         addBtn.setBounds(545, 50, 165, 35);
         addBtn.setFont(new Font("Times New Roman", Font.ITALIC,20));
         addBtn.setBorderPainted(false);
@@ -145,6 +172,7 @@ public class MainGraphic {
 
     private void setupOther() {
 
+        //set up search box
         Color bkgColor = new Color(190, 231, 231);
         searchWordBox.setBounds(2,2,335,46);
         searchWordBox.setFont(new Font("Times New Roman", Font.PLAIN,22));
@@ -154,11 +182,13 @@ public class MainGraphic {
         borderSeachBox.setBounds(280,90,340,50);
         borderSeachBox.add(searchWordBox);
 
+        //set up container containing list of suggestion word
         listSuggestionContainer.setBounds(280, 140, 340, 400);
         listSuggestionContainer.setOpaque(false);
         listSuggestionContainer.setBorder(BorderFactory.createEmptyBorder());
         listSuggestionContainer.setVisible(false);
 
+        //set up suggestion list
         Color bkgColor1 = new Color(138, 231, 231);
         suggestionsList.setBackground(bkgColor1);
         suggestionsList.setBounds(280,144,340,400);
@@ -167,11 +197,11 @@ public class MainGraphic {
         suggestionsList.setFont(new Font("Times New Roman", Font.BOLD,22));
         suggestionsList.addListSelectionListener(selectedWordListener);
 
-
-
+        // set up scroll bar
         textScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         textScrollPane.setBounds(0, 145, 893, 780);
 
+        //set up area where to show ...
         Color bkgColor2 = new Color(41, 162, 162);
         //generalTextPanel.setLayout(null);
         generalTextPanel.setEditable(false);
@@ -183,18 +213,11 @@ public class MainGraphic {
         generalTextPanel.add(answerBox);
         generalTextPanel.add(okAnswer);
 
+        //set up answer box
         answerBox.setEnabled(true);
         answerBox.setBounds(190, 135, 100, 35);
         answerBox.setFont(new Font("Times New Roman", Font.PLAIN,22));
         answerBox.setVisible(false);
-    }
-
-    public MainGraphic() {
-        setupOther();
-        setupButton();
-        setupPanel();
-        setupSearchWordBox();
-        colorAllChangeButton();
     }
 
     private void colorAllChangeButton() {
@@ -224,6 +247,7 @@ public class MainGraphic {
         });
     }
 
+    //set up search box
     private void setupSearchWordBox() {
         searchWordBox.addKeyListener(new KeyAdapter() {
             @Override
@@ -250,19 +274,30 @@ public class MainGraphic {
         });
     }
 
+    public MainGraphic() {
+        setupOther();
+        setupButton();
+        setupPanel();
+        setupSearchWordBox();
+        colorAllChangeButton();
+    }
+
+    //to String
     public static String wordString(ArrayList<Word> wordArrayList) {
         String string = "";
         for (Word w : wordArrayList) {
             if (w.getWord_explain().isEmpty() || wordArrayList == Dictionary.deletedArray) {
                 string += " - " + w.getWord_target() + "\n";
             } else {
-                string += "  - " + w.getWord_target() + " : " + w.getWord_explain() + "\n";
+                string += " - " + w.getWord_target() + " : " + w.getWord_explain() + "\n";
             }
         }
         return string;
     }
 
+    // listen recentBtn to act
     ActionListener recentBtnListener = showRecentWord -> {
+        setFalseGame();
         closeAllSubGraphic();
         listSuggestionContainer.setVisible(false);
         suggestionsList.clearSelection();
@@ -270,8 +305,8 @@ public class MainGraphic {
         generalTextPanel.setText(recentWordString);
     };
 
+    // listen searchBtn to act
     ActionListener searchBtnListener = search -> {
-
         listSuggestionContainer.setVisible(false);
         suggestionsList.clearSelection();
         if (!searchWordBox.getText().isEmpty()) {
@@ -286,7 +321,8 @@ public class MainGraphic {
         }
     };
 
-    public static void showAddAndModify(ArrayList<Word> arrayList) {
+    //to show some dictionaries
+    public static void showSomeDictionaries(ArrayList<Word> arrayList) {
         suggestionsList.clearSelection();
         listSuggestionContainer.setVisible(false);
         searchWordBox.setText("");
@@ -301,28 +337,34 @@ public class MainGraphic {
         generalTextPanel.setText(List);
     }
 
+    // listen addBtn to act
     ActionListener addBtnListener = add -> {
+        setFalseGame();
         closeAllSubGraphic();
         speakerBtn.setVisible(false);
-        showAddAndModify(Dictionary.addedArray);
+        showSomeDictionaries(Dictionary.addedArray);
         addWordGraphic = new SubGraphic("addWord", windowApp);
     };
 
-
+    // listen modifyBtn to act
     ActionListener modifyBtnListener = modify -> {
+        setFalseGame();
         closeAllSubGraphic();
         speakerBtn.setVisible(false);
-        showAddAndModify(Dictionary.modifiedArray);
+        showSomeDictionaries(Dictionary.modifiedArray);
         modifyWordGraphic = new SubGraphic("modifyWord", windowApp);
     };
 
+    // listen removeBtn to act
     ActionListener removeBtnListener = remove -> {
+        setFalseGame();
         closeAllSubGraphic();
         speakerBtn.setVisible(false);
-        showAddAndModify(Dictionary.deletedArray);
+        showSomeDictionaries(Dictionary.deletedArray);
         removeWordGraphic = new SubGraphic("removeWord", windowApp);
     };
 
+    //close subgraphic
     public void closeAllSubGraphic() {
         if (addWordGraphic != null) {
             addWordGraphic = null;
@@ -335,18 +377,14 @@ public class MainGraphic {
         }
     }
 
+    // listen speakBtn to act
     ActionListener speakBtnListener = speak -> {
-        int selectedWord = suggestionsList.getSelectedIndex();
-        if (selectedWord != -1) {
-            String word = (foundSuggestionList.get(selectedWord));
-            if (!word.isEmpty()) {
-                DictionaryManagement.textToSpeech(word);
-            }
-        } else if (!searchWordBox.getText().isEmpty()) {
+        if (!searchWordBox.getText().isEmpty()) {
             DictionaryManagement.textToSpeech(searchWordBox.getText());
         }
     };
 
+    // listen selection of user
     ListSelectionListener selectedWordListener = selectWord -> {
         speakerBtn.setVisible(true);
         listSuggestionContainer.setVisible(false);
@@ -363,7 +401,9 @@ public class MainGraphic {
         }
     };
 
+    // listen userBtn to act
     ActionListener usesrBtnListener = showUserWord -> {
+        setFalseGame();
         closeAllSubGraphic();
         speakerBtn.setVisible(false);
         suggestionsList.clearSelection();
@@ -373,12 +413,15 @@ public class MainGraphic {
         generalTextPanel.setText(userList);
     };
 
+    //game
     public void playGame() {
         answerBox.setVisible(true);
         okAnswer.setVisible(true);
         game1.getQuestion();
         generalTextPanel.setText(game1.getQuestionForGraphic);
     }
+
+    // listen gameBtn to act
     ActionListener gameBtnListener = game -> {
         speakerBtn.setVisible(false);
         suggestionsList.clearSelection();
@@ -386,6 +429,8 @@ public class MainGraphic {
         searchWordBox.setText("");
         playGame();
     };
+
+    //listen okBtn to act
     ActionListener okBtnListener = OK -> {
         String answerQuestion = answerBox.getText().replaceAll("\\s+", " ").trim();
         if (game1.markFuction == 1) {
@@ -406,5 +451,9 @@ public class MainGraphic {
             }
         }
     };
-
+    public void setFalseGame() {
+        answerBox.setVisible(false);
+        okAnswer.setVisible(false);
+        answerBox.setText("");
+    }
 }

@@ -9,17 +9,32 @@ import Dictionary.DictionaryManagement;
 import Dictionary.Word;
 
 public class SubGraphic implements ActionListener {
+
+    //Subwindow
     JDialog subWindow = new JDialog();
+
+    //Buttons
     JButton acceptBtn = new JButton();
     JButton cancelBtn = new JButton("Cancel");
     JButton searchBtn = new JButton("Search");
+
+    //Name of function
     JLabel functionLabel = new JLabel();
+
+    //Area to enter word_target
     JTextField enterWordBox = new JTextField();
+
+    //Name of function
     JLabel definitionLabel = new JLabel();
+
+    //Area to enter word_explain or show word_explain
     JTextArea definitionWordBox = new JTextArea();
+
+    //Notification when do something
     JTextField notificationLabel = new JTextField();
+
+    //get and set notification
     private String noti = "";
-    public String wordTarget;
 
     public String getNoti() {
         return noti;
@@ -30,6 +45,7 @@ public class SubGraphic implements ActionListener {
     }
 
 
+    //set location for subgraphic related to maingraphic
     public void setLocation(Frame windowApp) {
         Point mainFrameLocation = windowApp.getLocation();
         Dimension mainFrameSize = windowApp.getSize();
@@ -37,9 +53,15 @@ public class SubGraphic implements ActionListener {
         int subWindowY = mainFrameLocation.y + 200;
         subWindow.setLocation(subWindowX, subWindowY);
     }
+
+    //set up subgraphic
     public SubGraphic(String option, Frame windowApp) {
+
+        //timer
         Timer timer = new Timer(100, e -> setLocation(windowApp));
         timer.start();
+
+        //set up buttons and some other things
         acceptBtn.setBounds(35, 260, 80, 40);
         acceptBtn.setBorderPainted(true);
         acceptBtn.addActionListener(this);
@@ -72,6 +94,7 @@ public class SubGraphic implements ActionListener {
         notificationLabel.setBackground(Color.cyan);
         notificationLabel.setVisible(false);
 
+        //add buttons and some other things to subwindow
         subWindow.add(acceptBtn);
         subWindow.add(cancelBtn);
         subWindow.add(searchBtn);
@@ -84,6 +107,7 @@ public class SubGraphic implements ActionListener {
         subWindow.setSize(370,355);
         subWindow.setVisible(false);
 
+        //check conditions
         if (option.equals("addWord")) {
             subWindow.setVisible(true);
             setAddFunction();
@@ -101,7 +125,9 @@ public class SubGraphic implements ActionListener {
             setNoti("Error");
         }
     }
-
+    /**
+     the code below to set up and declare methods when user press button.
+     */
     public void setModifyFunction() {
         subWindow.setTitle("Modify Function");
         acceptBtn.setText("Modify");
@@ -154,6 +180,7 @@ public class SubGraphic implements ActionListener {
       acceptBtn.setVisible(false);
     };
 
+    //used when user uses remove fuction
     ActionListener searching = search -> {
         setNoti("");
         String text = enterWordBox.getText().replaceAll("\\s+", " ").trim();
@@ -174,17 +201,19 @@ public class SubGraphic implements ActionListener {
         }
     };
 
+
+    //Action when user presses any button or anywhere
     public void actionPerformed(ActionEvent event) {
          if (event.getSource() == acceptBtn) {
             if (getNoti() != null) {
                 if (getNoti().startsWith("A") || getNoti().startsWith("T")
                         || getNoti().startsWith("M") || getNoti().startsWith("D")) {
                     if (acceptBtn.getText().equals("Add")) {
-                        MainGraphic.showAddAndModify(Dictionary.addedArray);
+                        MainGraphic.showSomeDictionaries(Dictionary.addedArray);
                     } else if (acceptBtn.getText().equals("Modify")){
-                        MainGraphic.showAddAndModify(Dictionary.modifiedArray);
+                        MainGraphic.showSomeDictionaries(Dictionary.modifiedArray);
                     } else if (acceptBtn.getText().equals("Remove")) {
-                        MainGraphic.showAddAndModify(Dictionary.deletedArray);
+                        MainGraphic.showSomeDictionaries(Dictionary.deletedArray);
                     }
                     enterWordBox.setText("");
                     definitionWordBox.setText("");

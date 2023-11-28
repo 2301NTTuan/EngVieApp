@@ -1,0 +1,5 @@
+*cup 	cái cốc
+*dark 	bong toi
+*hello 	xin chao
+*king 	vua
+*sky 	bầu trời

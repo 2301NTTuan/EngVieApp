@@ -113,7 +113,7 @@ public class DictionaryCommandLine extends DictionaryManagement{
                         do {
                             game.getQuestion();
                             game.answerQ("");
-                            boolean mark = game.playAgian("");
+                            boolean mark = game.playAgain("");
                             if (!mark) {
                                 break;
                             }

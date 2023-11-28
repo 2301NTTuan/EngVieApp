@@ -1,7 +1,6 @@
 package Dictionary;
 
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 import static Dictionary.Dictionary.wordArray;
 
@@ -37,6 +36,7 @@ public class Game {
                 String option = wordArray.get(randomOptionIndex).getWord_target();
                 options[i] = option;
             }
+            shuffleArray(options);
             for (int i = 0; i < 4; i++) {
                 String option = options[i];
                 System.out.println((i + 1) + ". " + option);
@@ -70,7 +70,20 @@ public class Game {
         markFuction = 2;
     }
 
-    public boolean playAgian(String playAgain) {
+    //Trộn mảng
+    private static void shuffleArray(String[] array) {
+        int n = array.length;
+        Random random = new Random();
+
+        for (int i = n - 1; i > 0; i--) {
+            int randomIndex = random.nextInt(i + 1);
+            String temp = array[i];
+            array[i] = array[randomIndex];
+            array[randomIndex] = temp;
+        }
+    }
+
+    public boolean playAgain(String playAgain) {
         if (playAgain == null || playAgain.isEmpty()) {
             playAgain = scanner.nextLine();
         }
