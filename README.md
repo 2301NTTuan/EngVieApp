@@ -21,4 +21,8 @@ Hình ảnh giao diện đồ họa:
 
 ![image](https://github.com/2301NTTuan/EngVieApp/assets/129706740/413be27c-cec1-49ab-b543-b9e83c267c21)
 
+Cây kế thừa:
+
+![image](https://github.com/2301NTTuan/EngVieApp/assets/129706740/57e0ced8-66db-4380-94c8-64ade0987df2)
+
 
