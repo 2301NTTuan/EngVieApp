@@ -14,7 +14,8 @@ Các chức năng:
 
 Hình ảnh giao diện dòng lệnh:
 
-![image](https://github.com/2301NTTuan/EngVieApp/assets/129706740/acab3b61-a8eb-42ec-aedd-8989a286563e)
+![image](https://github.com/2301NTTuan/EngVieApp/assets/129706740/5b298133-ca4e-48d9-8d0e-991f28a65e91)
+
 
 Hình ảnh giao diện đồ họa:
 
