@@ -18,5 +18,6 @@ Hình ảnh giao diện dòng lệnh:
 
 Hình ảnh giao diện đồ họa:
 
-![image](https://github.com/2301NTTuan/EngVieApp/assets/129706740/ceb9c8a1-604e-44f7-ba50-c168037adf3a)
+![image](https://github.com/2301NTTuan/EngVieApp/assets/129706740/413be27c-cec1-49ab-b543-b9e83c267c21)
+
 
