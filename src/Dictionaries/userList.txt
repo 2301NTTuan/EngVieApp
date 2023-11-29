@@ -1,5 +1,9 @@
 *cup 	cái cốc
 *dark 	bong toi
-*hello 	xin chao
+*h 	h
+*happy 	vui
+*hello 	chào
 *king 	vua
+*pen 	cái bút
+*screen 	màn hình
 *sky 	bầu trời

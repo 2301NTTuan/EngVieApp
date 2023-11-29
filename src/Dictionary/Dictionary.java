@@ -3,7 +3,7 @@ package Dictionary;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
-public class Dictionary {
+public class Dictionary extends Word{
 
     //File các từ đã thay đổi
     public static final String modifiedList = getPath() + "/modifiedList.txt";

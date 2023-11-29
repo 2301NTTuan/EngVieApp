@@ -2,9 +2,7 @@ package Dictionary;
 
 import java.util.*;
 
-import static Dictionary.Dictionary.wordArray;
-
-public class Game {
+public class Game extends Dictionary {
     Scanner scanner = new Scanner(System.in);
     Random random = new Random();
     String[] options = new String[4];

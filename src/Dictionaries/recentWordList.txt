@@ -1,11 +1,16 @@
 *abaca 	
 *beach 	
 *dark 	
+*dog 	
+*happen 	
 *hello 	
 *k-ration 	
 *kina 	
 *king 	
+*laptop 	
+*pen 	
 *s 	
+*screen 	
 *shabby-genteel 	
 *skald 	
 *sky 	
